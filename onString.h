@@ -16,7 +16,7 @@ using namespace std;
 // 
 // interface
 //
-vector<string> vectorFromSplitString(string theString);
+vector<string> vectorFromSplitString(string theString, char dlim);
 vector<string> getScanDataFromFile(string filename, string sno);
 void saveVStringToFile(vector<string>,string filename);
 void showAllFile();
@@ -26,18 +26,36 @@ void showVString(vector<string> strlist);
 //
 // implement
 //
-vector<string> vectorFromSplitString(string theString){
-	vector<string> llist;
+//vector<string> vectorFromSplitString(string theString){
+vector<string> vectorFromSplitString(string theString, char dlim){
+//	vector<string> llist;
+//	istringstream iss(theString);
+//
+//	do{
+//		string sub;
+//		iss >> sub;
+//		llist.push_back(sub);
+//	}
+//	while(iss);
+//	
+//	return llist;
+	char buffer[1024];
+	vector<string> elements;
+
 	istringstream iss(theString);
 
-	do{
-		string sub;
-		iss >> sub;
-		llist.push_back(sub);
+	while(!iss.eof()){
+		iss.getline(buffer, 1024, dlim);
+		string temp(buffer);
+		elements.push_back(temp);
 	}
-	while(iss);
+
+	// test code
+	//for(int i = 0; i < elements.size(); i++){
+	//	cout << elements[i] << endl;
+	//}
 	
-	return llist;
+	return elements;
 }
 
 void showAllFile(string filename){
@@ -67,7 +85,7 @@ vector<string> getScanDataFromFile(string filename, string sno){
 	// jump to sno scan number
 	while(!infile.eof()){
 		getline(infile, strline);
-		line = vectorFromSplitString(strline);
+		line = vectorFromSplitString(strline,' ');
 		if( line.size() == 1) continue; // skip the empty line
 
 		// Find the Scan no "#S NN"
@@ -84,7 +102,7 @@ vector<string> getScanDataFromFile(string filename, string sno){
 	// scan data of scan number in "sno"
 	while(1){
 		getline(infile,strline);
-		line = vectorFromSplitString(strline);
+		line = vectorFromSplitString(strline, ' ');
 		// and stop at empty line
 		if( line.size() <= 1) break; // stop at the empty line
 		
