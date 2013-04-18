@@ -31,6 +31,7 @@ int main(void){
 		vector<string> scan;
 		//scan = getScanDataFromFile(filename,scanlist[i]);
 		scan = getScanDataFromFileLines(filelines, scanlist[i]);
+		scan = getHKLScanFromFileLines(filelines, scanlist[i]);
 		for(int j = 0 ;j < scan.size() ;j++ ){
 			cout << scan[i] << endl;
 		}
